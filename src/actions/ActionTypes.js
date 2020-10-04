@@ -15,3 +15,8 @@ export const AUTH_GET_STATUS_FAILURE = "AUTH_GET_STATUS_FAILURE";
 
 // logout
 export const AUTH_LOGOUT = "AUTH_LOGOUT";
+
+// Post MEMO
+export const MEMO_POST = "MEMO_POST";
+export const MEMO_POST_SUCCESS = "MEMO_POST_SUCCESS";
+export const MEMO_POST_FAILURE = "MEMO_POST_FAILURE";
