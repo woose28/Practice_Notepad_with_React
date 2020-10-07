@@ -34,7 +34,7 @@ class App extends Component{
             username : ''
           };
 
-          document.cookie = "key="+bota(JSON.stringify(loginData));
+          document.cookie = "key="+btoa(JSON.stringify(loginData));
 
           let $toastContent = $('<span style="color: #FFB4BA">Your session is expried, please log in again</span>');
 

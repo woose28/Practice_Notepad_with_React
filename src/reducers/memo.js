@@ -54,7 +54,59 @@ export default function memo(state=initial_state, action){
             error : action.error
           }
         };
+
+      case types.MEMO_LIST:
+        console.log("Reducer MEMO_LIST 호출 됨");
+        return {
+          ...state,
+          list : {
+            ...state.list,
+            status : "WAITING"
+          }
+        };
+
+
+      case types.MEMO_LIST_SUCCESS:
+        console.log("Reducer MEMO_LIST_SUCCESS 호출 됨");
+        if(action.isInitial){
+          console.log("action.isInitial True");
+          console.log(JSON.stringify(action.data));
+          return {
+            ...state,
+            list : {
+              ...state.list,
+              status : "SUCCESS",
+              data : action.data,
+              isLast : action.data.length < 6
+            }
+          };
+        }
+        else {
+          if(actionsTypes === "new"){
+            return {
+              ...state,
+              list:{
+                ...state.list,
+                status : "SUCCESS",
+                data : [...action.data, ...state.list.data]
+              }
+            };
+          }
+          else{
+            return {
+              ...state,
+              list:{
+                ...state.list,
+                status : "SUCCESS",
+                data : [...state.list.data, ...action.data],
+                isLast : action.data.length < 6
+              }
+            };
+          }
+        }
+        break;
       default :
+        console.log("Reducer default 호출됨");
         return state;
   }
 }

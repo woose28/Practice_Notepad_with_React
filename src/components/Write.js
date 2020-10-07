@@ -45,7 +45,7 @@ class Write extends Component{
     }
 }
 
-Write.PropTypes = {
+Write.propTypes = {
   onPost : PropTypes.func
 }
 

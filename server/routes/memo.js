@@ -50,6 +50,48 @@ router.delete("/:id", (req, res)=>{
 
 // GET MEMO LIST
 router.get("/", (req, res)=>{
+  console.log("/api/memo/ 호출 됨");
+  Memo.find().sort({"_id" : -1}).limit(6).exec((err, memos)=> {
+    if(err) throw err;
+    console.log("정상 반환");
+    return res.json(memos);
+  });
+});
+
+router.get("/:listType/:id", (req, res) => {
+  let listType = req.params.listType;
+  let id = req.params.id;
+
+  if(listType !== "old" && listType !== "new"){
+    return res.status(400).json({
+      error : "INVALID LISTTYPE",
+      code : 1
+    });
+  }
+
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(400).json({
+      error : "INVALID ID",
+      code : 2
+    });
+  }
+
+  let objID = new mongoose.Types.ObjectId(id);
+
+  if(listType === "new"){
+    Memo.find({ _id : { $gt : objId}}).sort({_id:-1}).limit(6)
+    .exec((err, memos) => {
+      if(err) throw err;
+      return res.json(memos);
+    });
+  }
+  else{
+    Memo.find().sort({_id : { $lt : objId}}).limit(6)
+    .exec((err, memos) => {
+      if(err) throw err;
+      return res.json(memos);
+    });
+  }
 
 });
 
